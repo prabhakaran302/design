@@ -1,13 +1,14 @@
 package com.games.kalah.service.processor;
 
+import javax.validation.Valid;
+
+import com.games.kalah.domain.Game;
 import com.games.kalah.service.dto.GameRequest;
-import com.games.kalah.service.dto.GameResponse;
-import com.games.kalah.service.dto.GameStartResponse;
 
 public interface GameProcessor {
 
-	GameStartResponse startGame();
+	void startGame(Long gameId);
 
-	GameResponse processGame(GameRequest gameRequest);
+	Game processGame(@Valid GameRequest gameRequest) throws Exception;
 
 }

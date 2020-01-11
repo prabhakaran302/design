@@ -1,13 +1,19 @@
 package com.games.kalah.domain;
 
+import java.io.Serializable;
+
 import com.games.kalah.exception.InvalidStoneFetchOperationException;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Board {
+@NoArgsConstructor
+public class Board implements Serializable {
+
+	private static final long serialVersionUID = 5359065505114013338L;
 
 	public static final int STONES_PER_HOUSE = 6;
 	public static final int HOUSES_PER_PLAYER = 6;

@@ -1,5 +1,6 @@
 package com.games.kalah.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 import lombok.AccessLevel;
@@ -10,15 +11,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
-public class Game {
+public class Game implements Serializable {
 
+	private static final long serialVersionUID = -1955252658899979989L;
+	
 	private Long id;
 	private final Board board = new Board();
 	private final List<Player> players;
-	private boolean over = Boolean.FALSE;
-	private boolean started = Boolean.FALSE;
+	private boolean gameInProcess = Boolean.FALSE;
 	private String winner;
-	private Turn currentTurn;
-	private Turn previousTurn;
 	private Player takeTurnPlayer;
+	private int chosenHouseIndex;
+
 }

@@ -1,5 +1,7 @@
 package com.games.kalah.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.games.kalah.service.KalahService;
 import com.games.kalah.service.dto.GameRequest;
 import com.games.kalah.service.dto.GameResponse;
 import com.games.kalah.service.dto.GameStartResponse;
-import com.games.kalah.service.processor.GameProcessor;
 import com.games.kalah.util.Constants;
 
 @RestController
@@ -21,19 +23,27 @@ import com.games.kalah.util.Constants;
 public class KalahController {
 
 	@Autowired
-	private GameProcessor gameProcessor;
+	private KalahService kalahService;
 
 	@PutMapping(value = Constants.Api.TURNS)
-	public ResponseEntity<GameResponse> makeTurn(@RequestBody GameRequest gameRequest, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			return null;
-		} else {
-			return new ResponseEntity<GameResponse>(gameProcessor.processGame(gameRequest), HttpStatus.OK);
+	public ResponseEntity<?> makeTurn(@Valid @RequestBody GameRequest gameRequest, BindingResult bindingResult) {
+		try {
+			if (bindingResult.hasErrors()) {
+				return new ResponseEntity<String>("Error in request", HttpStatus.BAD_REQUEST);
+			} else {
+				return new ResponseEntity<GameResponse>(kalahService.processGame(gameRequest), HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@PostMapping(value = Constants.Api.GAME)
-	public ResponseEntity<GameStartResponse> startGame() {
-		return new ResponseEntity<GameStartResponse>(gameProcessor.startGame(), HttpStatus.CREATED);
+	public ResponseEntity<?> startGame() {
+		try {
+			return new ResponseEntity<GameStartResponse>(kalahService.startGame(), HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

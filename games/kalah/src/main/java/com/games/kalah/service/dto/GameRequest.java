@@ -1,17 +1,18 @@
 package com.games.kalah.service.dto;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 public class GameRequest {
-	@NotBlank(message = "Game Id is mandatory")
+	@NotNull(message = "Game Id is mandatory")
 	private Long gameId;
 
 	@NotNull
+	@Min(1)
+	@Max(14)
 	private Integer pitId;
 }
