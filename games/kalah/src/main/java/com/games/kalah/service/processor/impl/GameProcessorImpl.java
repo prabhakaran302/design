@@ -30,9 +30,11 @@ public class GameProcessorImpl implements GameProcessor {
 	@Override
 	public Game processGame(GameRequest gameRequest) throws Exception {
 		Game game = gameRepository.getOne(gameRequest.getGameId());
+		if (game == null || gameRequest.getPitId() > 13)
+			throw new Exception("Game not Exists...");
 		if (!game.isOver()) {
 			game.getTurn().setCurrentPitId(gameRequest.getPitId());
-			if (game.getBoard().getHouses()[gameRequest.getPitId()] == 0) {
+			if (game.getBoard().getHouses()[gameRequest.getPitId() - 1] == 0) {
 				game.setGameCurrentMessage("Invalid Attempt ! No Stones at given pitID...");
 				return game;
 			}
