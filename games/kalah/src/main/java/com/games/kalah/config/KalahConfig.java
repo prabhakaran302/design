@@ -25,8 +25,8 @@ public class KalahConfig {
 	public List<RulesApplier> rulesAppliers() {
 		ArrayList<RulesApplier> rulesAppliers = new ArrayList<RulesApplier>();
 		rulesAppliers.add(new MoveStones());
-		rulesAppliers.add(new ReInitalizeTurn());
 		rulesAppliers.add(new CaptureStones());
+		rulesAppliers.add(new ReInitalizeTurn());
 		rulesAppliers.add(new CheckResult());
 		return rulesAppliers;
 	}

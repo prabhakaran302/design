@@ -58,7 +58,8 @@ public class KalahServiceImpl implements KalahService {
 	private GameResponse createResponse(Game game) throws UnknownHostException {
 		GameStatus status = new GameStatus();
 		status.setBoardValues(game.getBoard().getHouses());
-		return GameResponse.builder().gameId(game.getId()).url(getURI(game.getId())).status(status).build();
+		status.setMessage(game.getGameCurrentMessage());
+		return GameResponse.builder().id(game.getId()).url(getURI(game.getId())).status(status).build();
 	}
 
 }

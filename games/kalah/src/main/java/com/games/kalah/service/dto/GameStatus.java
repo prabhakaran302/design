@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class GameStatus {
 	private int[] boardValues;
+	private String message;
 
 	@Override
 	public String toString() {
@@ -14,7 +15,7 @@ public class GameStatus {
 		for (int i = 0; i < boardValues.length; i++) {
 			sb.append(i + 1 + " : " + boardValues[i] + ",");
 		}
-		return sb.substring(0, sb.lastIndexOf(",")).toString();
+		return sb.append(" message " + message).toString();
 	}
 
 }

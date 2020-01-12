@@ -30,7 +30,7 @@ public class GameProcessorImpl implements GameProcessor {
 	@Override
 	public Game processGame(GameRequest gameRequest) throws Exception {
 		Game game = gameRepository.getOne(gameRequest.getGameId());
-		game.setChosenHouseIndex(gameRequest.getPitId());
+		game.getTurn().setCurrentPitId(gameRequest.getPitId());
 		rulesAppliersList.forEach(applier -> {
 			try {
 				applier.applyRule(game);
@@ -38,6 +38,7 @@ public class GameProcessorImpl implements GameProcessor {
 				e.printStackTrace();
 			}
 		});
+		gameRepository.save(game);
 		return game;
 	}
 

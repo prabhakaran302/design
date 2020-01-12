@@ -1,19 +1,30 @@
 package com.games.kalah.service.rules.impl;
 
-import com.games.kalah.domain.Game;
-import com.games.kalah.service.rules.RulesApplier;
+import org.springframework.stereotype.Component;
 
-public class CaptureStones implements RulesApplier {
+import com.games.kalah.domain.Game;
+
+@Component
+public class CaptureStones extends CheckPlayerTurn {
 
 	@Override
 	public void applyRule(Game game) throws Exception {
-
+		if (canPlayerTakeTurn(game) && canCaptureStonePlayer(game)) {
+			int[] target = game.getBoard().getHouses();
+			int lastSownIndex = game.getTurn().getLastSownIndex();
+			if (target[lastSownIndex] == 1) {
+				int ownStone = target[lastSownIndex];
+				int opposite = target[Math.abs(12 - lastSownIndex)];
+				target[game.getTakeTurnPlayer().getStoreIndex()] += ownStone + opposite;
+				target[lastSownIndex] = 0;
+				target[Math.abs(12 - lastSownIndex)] = 0;
+			}
+		}
 	}
 
 	@Override
 	public int getOrder() {
-
-		return 2;
+		return 1;
 	}
 
 }

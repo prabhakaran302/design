@@ -1,19 +1,27 @@
 package com.games.kalah.service.rules.impl;
 
-import com.games.kalah.domain.Game;
-import com.games.kalah.service.rules.RulesApplier;
+import org.springframework.stereotype.Component;
 
-public class ReInitalizeTurn implements RulesApplier {
+import com.games.kalah.domain.Game;
+
+@Component
+public class ReInitalizeTurn extends CheckPlayerTurn {
 
 	@Override
 	public void applyRule(Game game) throws Exception {
-
+		if (canPlayerTakeTurn(game)) {
+			if (game.getTakeTurnPlayer() == game.getPlayers().get(0)) {
+				game.setTakeTurnPlayer(game.getPlayers().get(1));
+			} else {
+				game.setTakeTurnPlayer(game.getPlayers().get(0));
+			}
+			game.setGameCurrentMessage("Turn " + game.getTakeTurnPlayer().getName());
+		}
 	}
 
 	@Override
 	public int getOrder() {
-
-		return 1;
+		return 2;
 	}
 
 }

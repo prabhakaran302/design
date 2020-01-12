@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.games.kalah.domain.Board;
 import com.games.kalah.domain.Game;
 import com.games.kalah.domain.Player;
+import com.games.kalah.domain.Turn;
 
 @Component
 public class InitializeGame {
@@ -26,6 +27,8 @@ public class InitializeGame {
 				new Player(playerSouthName, Integer.parseInt(playerSouthIndex))));
 		game.setId(gameId);
 		game.setTakeTurnPlayer(game.getPlayers().get(0));
+		Turn turn = new Turn();
+		game.setTurn(turn);
 		fillBoardWithInitialValues(game);
 		return game;
 	}

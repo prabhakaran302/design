@@ -15,16 +15,15 @@ public class MoveStones extends CheckPlayerTurn {
 
 	@Override
 	public void applyRule(Game game) throws Exception {
-		if (canPlayerTakeTurn(game, game.getChosenHouseIndex())) {
-			moveStone(game, game.getChosenHouseIndex());
+		if (canPlayerTakeTurn(game)) {
+			moveStone(game, game.getTurn().getCurrentPitId());
 		} else {
-			throw new Exception("Its another player turn, choose appropriate pitId(index)");
+			game.setGameCurrentMessage("Another person Turn");
 		}
 	}
 
 	private void moveStone(Game game, int chosenHouse) {
 		int targetArray[] = game.getBoard().getHouses();
-
 		int index = game.getTakeTurnPlayer().getStoreIndex();
 		int ignoreIndex = index == Integer.parseInt(playerNorthIndex) ? Integer.parseInt(playerSouthIndex)
 				: Integer.parseInt(playerNorthIndex);
@@ -41,13 +40,17 @@ public class MoveStones extends CheckPlayerTurn {
 					tempIndex++;
 					val--;
 				}
-				if (tempIndex == targetArray.length - 1) {
+				if (ignoreIndex == tempIndex && tempIndex == targetArray.length - 1)
+					tempIndex = 0;
+				else if (tempIndex == targetArray.length) {
 					tempIndex = 0;
 				}
 			}
 			lastSownIndex = tempIndex - 1;
-			if (targetArray[lastSownIndex] == 1)
+			if (targetArray[lastSownIndex] == 1) {
 				flag = false;
+				game.getTurn().setLastSownIndex(lastSownIndex);
+			}
 		}
 	}
 

@@ -21,6 +21,8 @@ public class Game implements Serializable {
 	private boolean gameInProcess = Boolean.FALSE;
 	private String winner;
 	private Player takeTurnPlayer;
-	private int chosenHouseIndex;
+	
+	private Turn turn;
+	private String gameCurrentMessage;
 
 }
