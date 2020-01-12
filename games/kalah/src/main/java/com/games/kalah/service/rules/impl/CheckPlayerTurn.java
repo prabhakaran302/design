@@ -10,7 +10,7 @@ import com.games.kalah.service.rules.RulesApplier;
 public abstract class CheckPlayerTurn implements RulesApplier {
 	boolean canPlayerTakeTurn(Game game) {
 		int storeIndex = game.getTakeTurnPlayer().getStoreIndex();
-		return game.getTurn().getCurrentPitId() < storeIndex
+		return !game.isOver() && game.getTurn().getCurrentPitId() <= storeIndex
 				&& game.getTurn().getCurrentPitId() >= storeIndex - Board.HOUSES_PER_PLAYER;
 	}
 
@@ -19,5 +19,11 @@ public abstract class CheckPlayerTurn implements RulesApplier {
 				&& (game.getTakeTurnPlayer().getStoreIndex() - game.getTurn().getLastSownIndex() > 0
 						&& game.getTakeTurnPlayer().getStoreIndex()
 								- game.getTurn().getLastSownIndex() <= Board.HOUSES_PER_PLAYER);
+	}
+
+	boolean repeatTurn(Game game) {
+		if (game.getTakeTurnPlayer().getStoreIndex() == game.getTurn().getLastSownIndex())
+			return true;
+		return false;
 	}
 }

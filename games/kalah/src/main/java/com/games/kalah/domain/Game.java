@@ -14,14 +14,15 @@ import lombok.Setter;
 public class Game implements Serializable {
 
 	private static final long serialVersionUID = -1955252658899979989L;
-	
+
 	private Long id;
 	private final Board board = new Board();
 	private final List<Player> players;
-	private boolean gameInProcess = Boolean.FALSE;
+	private boolean gameInProcess = false;
+	private boolean isOver = false;
 	private String winner;
 	private Player takeTurnPlayer;
-	
+
 	private Turn turn;
 	private String gameCurrentMessage;
 

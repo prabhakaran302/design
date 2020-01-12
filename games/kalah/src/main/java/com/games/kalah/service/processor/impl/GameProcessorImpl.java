@@ -30,16 +30,25 @@ public class GameProcessorImpl implements GameProcessor {
 	@Override
 	public Game processGame(GameRequest gameRequest) throws Exception {
 		Game game = gameRepository.getOne(gameRequest.getGameId());
-		game.getTurn().setCurrentPitId(gameRequest.getPitId());
-		rulesAppliersList.forEach(applier -> {
-			try {
-				applier.applyRule(game);
-			} catch (Exception e) {
-				e.printStackTrace();
+		if (!game.isOver()) {
+			game.getTurn().setCurrentPitId(gameRequest.getPitId());
+			if (game.getBoard().getHouses()[gameRequest.getPitId()] == 0) {
+				game.setGameCurrentMessage("Invalid Attempt ! No Stones at given pitID...");
+				return game;
 			}
-		});
-		gameRepository.save(game);
+			rulesAppliersList.forEach(applier -> {
+				try {
+					applier.applyRule(game);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			});
+			gameRepository.save(game);
+		} else {
+			game.setGameCurrentMessage("Game Already Over....");
+		}
 		return game;
+
 	}
 
 }

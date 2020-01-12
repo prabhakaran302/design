@@ -10,6 +10,7 @@ public class CaptureStones extends CheckPlayerTurn {
 	@Override
 	public void applyRule(Game game) throws Exception {
 		if (canPlayerTakeTurn(game) && canCaptureStonePlayer(game)) {
+			System.out.println("capture stones event....");
 			int[] target = game.getBoard().getHouses();
 			int lastSownIndex = game.getTurn().getLastSownIndex();
 			if (target[lastSownIndex] == 1) {

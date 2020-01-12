@@ -16,38 +16,56 @@ public class MoveStones extends CheckPlayerTurn {
 	@Override
 	public void applyRule(Game game) throws Exception {
 		if (canPlayerTakeTurn(game)) {
+			System.out.println("Moving stones....");
 			moveStone(game, game.getTurn().getCurrentPitId());
 		} else {
-			game.setGameCurrentMessage("Another person Turn");
+			game.setGameCurrentMessage("Invalid Attempt : Another person Turn");
 		}
 	}
 
-	private void moveStone(Game game, int chosenHouse) {
+	private void moveStone(Game game, int pitId) {
+
 		int targetArray[] = game.getBoard().getHouses();
 		int index = game.getTakeTurnPlayer().getStoreIndex();
 		int ignoreIndex = index == Integer.parseInt(playerNorthIndex) ? Integer.parseInt(playerSouthIndex)
 				: Integer.parseInt(playerNorthIndex);
-		int lastSownIndex = chosenHouse - 1;
+		int lastSownIndex = pitId - 1;
 
 		boolean flag = true;
+		boolean lastIndexFlag = false;
 		while (flag) {
 			int val = targetArray[lastSownIndex];
 			targetArray[lastSownIndex] = 0;
 			int tempIndex = lastSownIndex + 1;
 			while (val > 0) {
+				lastIndexFlag = false;
 				if (tempIndex != ignoreIndex) {
 					targetArray[tempIndex] += 1;
 					tempIndex++;
 					val--;
 				}
-				if (ignoreIndex == tempIndex && tempIndex == targetArray.length - 1)
+				if (tempIndex == ignoreIndex && tempIndex != targetArray.length - 1) {
+					tempIndex++;
+					lastIndexFlag = true;
+				} else if (ignoreIndex == tempIndex && tempIndex == targetArray.length - 1)
 					tempIndex = 0;
 				else if (tempIndex == targetArray.length) {
 					tempIndex = 0;
 				}
 			}
-			lastSownIndex = tempIndex - 1;
-			if (targetArray[lastSownIndex] == 1) {
+
+			lastSownIndex = lastIndexFlag == false ? tempIndex - 1 : tempIndex - 2;
+			if (lastSownIndex == -1 && ignoreIndex == targetArray.length - 1) {
+				lastSownIndex = targetArray.length - 2;
+			}
+			if (lastSownIndex == game.getTakeTurnPlayer().getStoreIndex()) {
+				flag = false;
+				game.getTurn().setLastSownIndex(lastSownIndex);
+			}
+			if (lastSownIndex == -1 && ignoreIndex != targetArray.length - 1) {
+				flag = false;
+				game.getTurn().setLastSownIndex(targetArray.length - 1);
+			} else if (targetArray[lastSownIndex] == 1) {
 				flag = false;
 				game.getTurn().setLastSownIndex(lastSownIndex);
 			}
