@@ -21,18 +21,24 @@ public class CheckResult implements RulesApplier {
 			int lsum = 0;
 			int rsum = 0;
 			if (player1) {
-				lsum = moveToStoreIndex(game, game.getPlayers().get(0));
+				lsum = moveToStoreIndex(game, game.getPlayers().get(1));
 			} else {
-				rsum = moveToStoreIndex(game, game.getPlayers().get(1));
+				rsum = moveToStoreIndex(game, game.getPlayers().get(0));
 			}
-			game.setWinner(game.getBoard().getHouses()[game.getPlayers().get(0).getStoreIndex()] > game.getBoard()
-					.getHouses()[game.getPlayers().get(1).getStoreIndex()] ? game.getPlayers().get(0).getName()
-							: game.getPlayers().get(1).getName());
-			if (lsum == rsum)
+
+			if (lsum == rsum) {
 				game.setWinner("Draw");
+				game.setGameCurrentMessage("Game Over with Draw");
+			} else {
+				game.setWinner(game.getBoard().getHouses()[game.getPlayers().get(0).getStoreIndex()] > game.getBoard()
+						.getHouses()[game.getPlayers().get(1).getStoreIndex()] ? game.getPlayers().get(0).getName()
+								: game.getPlayers().get(1).getName());
+				game.setGameCurrentMessage("Game Over with winner .. " + game.getWinner());
+			}
 
 			game.setGameInProcess(false);
 			game.setOver(true);
+
 		}
 	}
 

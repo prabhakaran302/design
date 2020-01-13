@@ -27,6 +27,7 @@ public class InitializeGame {
 				new Player(playerSouthName, Integer.parseInt(playerSouthIndex))));
 		game.setId(gameId);
 		game.setTakeTurnPlayer(game.getPlayers().get(0));
+		
 		Turn turn = new Turn();
 		game.setTurn(turn);
 		fillBoardWithInitialValues(game);

@@ -22,8 +22,11 @@ public abstract class CheckPlayerTurn implements RulesApplier {
 	}
 
 	boolean repeatTurn(Game game) {
-		if (game.getTakeTurnPlayer().getStoreIndex() == game.getTurn().getLastSownIndex())
+		if (game.getTakeTurnPlayer().getStoreIndex() == game.getTurn().getLastSownIndex()) {
+			game.setGameCurrentMessage("Next Turn " + game.getTakeTurnPlayer().getName() + " With store Index "
+					+ game.getTakeTurnPlayer().getStoreIndex());
 			return true;
+		}
 		return false;
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.games.kalah.exception.InvalidStoneFetchOperationException;
 import com.games.kalah.model.Game;
 import com.games.kalah.repository.GameRepository;
 import com.games.kalah.service.dto.GameRequest;
@@ -30,8 +31,7 @@ public class GameProcessorImpl implements GameProcessor {
 	@Override
 	public Game processGame(GameRequest gameRequest) throws Exception {
 		Game game = gameRepository.getOne(gameRequest.getGameId());
-		if (game == null || gameRequest.getPitId() > 13)
-			throw new Exception("Game not Exists...");
+		validateGame(game, gameRequest);
 		if (!game.isOver()) {
 			game.getTurn().setCurrentPitId(gameRequest.getPitId());
 			if (game.getBoard().getHouses()[gameRequest.getPitId() - 1] == 0) {
@@ -51,6 +51,13 @@ public class GameProcessorImpl implements GameProcessor {
 		}
 		return game;
 
+	}
+
+	private void validateGame(Game game, GameRequest gameRequest) throws InvalidStoneFetchOperationException {
+		if (game == null)
+			throw new InvalidStoneFetchOperationException("Invalid Game....");
+		if (gameRequest.getPitId() > 13 || gameRequest.getPitId() == game.getBoard().getHouses().length / 2)
+			throw new InvalidStoneFetchOperationException("Invalid Pit Id...");
 	}
 
 }
