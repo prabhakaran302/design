@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 
 import org.springframework.stereotype.Repository;
 
-import com.games.kalah.domain.Game;
+import com.games.kalah.model.Game;
 
 @Repository
 public class GameRepository {

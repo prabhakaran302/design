@@ -1,4 +1,4 @@
-package com.games.kalah.domain;
+package com.games.kalah.model;
 
 import java.io.Serializable;
 

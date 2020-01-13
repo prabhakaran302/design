@@ -3,7 +3,7 @@ package com.games.kalah.service.rules.impl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.games.kalah.domain.Game;
+import com.games.kalah.model.Game;
 
 @Component
 public class MoveStones extends CheckPlayerTurn {

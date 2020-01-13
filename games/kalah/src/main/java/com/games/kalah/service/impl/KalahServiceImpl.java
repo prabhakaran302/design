@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.games.kalah.domain.Game;
+import com.games.kalah.model.Game;
 import com.games.kalah.service.KalahService;
 import com.games.kalah.service.dto.GameRequest;
 import com.games.kalah.service.dto.GameResponse;

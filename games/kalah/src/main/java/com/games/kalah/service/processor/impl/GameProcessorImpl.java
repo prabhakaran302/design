@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.games.kalah.domain.Game;
+import com.games.kalah.model.Game;
 import com.games.kalah.repository.GameRepository;
 import com.games.kalah.service.dto.GameRequest;
 import com.games.kalah.service.processor.GameProcessor;

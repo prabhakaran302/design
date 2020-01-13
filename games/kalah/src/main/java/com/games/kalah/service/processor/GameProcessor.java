@@ -2,7 +2,7 @@ package com.games.kalah.service.processor;
 
 import javax.validation.Valid;
 
-import com.games.kalah.domain.Game;
+import com.games.kalah.model.Game;
 import com.games.kalah.service.dto.GameRequest;
 
 public interface GameProcessor {

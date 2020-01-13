@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 import org.springframework.stereotype.Component;
 
-import com.games.kalah.domain.Board;
-import com.games.kalah.domain.Game;
-import com.games.kalah.domain.Player;
+import com.games.kalah.model.Board;
+import com.games.kalah.model.Game;
+import com.games.kalah.model.Player;
 import com.games.kalah.service.rules.RulesApplier;
 
 @Component
