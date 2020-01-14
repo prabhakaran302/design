@@ -4,9 +4,9 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 public class GameRequest {
 	@NotNull(message = "Game Id is mandatory")
 	private Long gameId;
